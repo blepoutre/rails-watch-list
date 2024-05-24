@@ -35,15 +35,33 @@
 
 <h1><%= @list.name.upcase %></h1>
   <div class= container>
-    <div class="card-movie-list">
-      <% @list.bookmarks.each_with_index do |bookmark, index|%>
-        <h2><%= bookmark.movie.title %></h2>
-        <p><%= bookmark.movie.overview %>
-        <p><%= bookmark.movie.poster_url %>
-        <p><%= bookmark.movie.rating %>
-        <%= link_to "❌", bookmark_path(bookmark.id), data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
-      <% end %>
+    <div id="carouselExampleCaptions" class="carousel slide">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <% @list.bookmarks.each_with_index do |bookmark, index|%>
+    <div class="carousel-item active d-flex justify-content-center">
+      <img src="<%= bookmark.movie.poster_url %>" class="d-block w-25" alt="<%= bookmark.movie.title %>.">
+      <div class="carousel-caption d-none d-md-block">
+        <h5><%= bookmark.movie.title %></h5>
+        <p><%= bookmark.movie.overview %></p>
+      </div>
     </div>
+    <% end %>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
   </div>
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -56,9 +74,9 @@
         <div>
           <% @list.bookmarks.each_with_index do |bookmark, index|%>
           <h2><%= bookmark.movie.title %></h2>
-          <p><%= bookmark.movie.overview %>
-          <p><%= bookmark.movie.poster_url %>
-          <p><%= bookmark.movie.rating %>
+          <p><%= bookmark.movie.overview %></p>
+          <p><%= bookmark.movie.poster_url %></p>
+          <p><%= bookmark.movie.rating %></p>
           <%= link_to "❌", bookmark_path(bookmark.id), data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
           <% end %>
         </div>
