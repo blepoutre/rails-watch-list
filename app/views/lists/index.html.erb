@@ -1,9 +1,42 @@
-<%= link_to "Create list", new_list_path, class: 'btn btn-success' %>
-<div class="container">
-<h1>Choose a program :</h1>
-  <ul>
-    <% @lists.each do |list| %>
-      <li><%= link_to list.name, list_path(list) %></li>
+<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
+  <div class="container-fluid">
+    <%= link_to "#", class: "navbar-brand" do %>
+      <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/logo.png" %>
     <% end %>
-  </ul>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto">
+          <li class="nav-item active">
+            <%# link_to home %>
+            <%= link_to "Home", lists_path, class: 'nav-link' %>
+          </li>
+          <li class="nav-item">
+            <%# link_to create list %>
+            <%= link_to "Create list", new_list_path, class: 'nav-link' %>
+          </li>
+          <li class="nav-item dropdown">
+            <%= image_tag "https://kitt.lewagon.com/placeholder/users/blepoutre", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <%= link_to "Action", "#", class: "dropdown-item" %>
+              <%= link_to "Another action", "#", class: "dropdown-item" %>
+              <%= link_to "Log out", "#", class: "dropdown-item", data: {turbo_method: :delete} %>
+            </div>
+          </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<h1 class="my-5">Choose a program :</h1>
+
+<div class="container text-center wrapper">
+    <% @lists.each do |list| %>
+      <div class="card-container">
+        <%= link_to list.name.upcase, list_path(list) %>
+      </div>
+    <% end %>
 </div>

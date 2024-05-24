@@ -1,36 +1,92 @@
-<%= link_to "Home", lists_path, class: "btn btn-primary" %>
+<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
+  <div class="container-fluid">
+    <%= link_to "#", class: "navbar-brand" do %>
+      <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/logo.png" %>
+    <% end %>
 
-<%= link_to "Add a movie", new_list_bookmark_path(@list), class: "btn btn-success" %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-<h1>Details</h1>
-<%= @list.name %>
-<%# <ul class="container"> %>
-<%# @list.bookmarks.each do |bookmark, index|>%>
-  <%#<li><%= bookmark.movie.title > <%= link_to "❌", bookmark_path(bookmark.id), data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'} ></li %>
-  <%# <% end %>
-<%# </ul> %>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto">
+          <li class="nav-item active">
+            <%# link_to home %>
+            <%= link_to "Home", lists_path, class: 'nav-link' %>
+          </li>
+          <li class="nav-item">
+            <%# link_to addmovie %>
+            <%= link_to "#", class: 'nav-link', id: 'add-movie-link', data: { bs_toggle: "modal", bs_target: "#staticBackdrop" } do %>
+            Movies Library
+            <% end %>
+          </li>
+          <li class="nav-item dropdown">
+            <%= image_tag "https://kitt.lewagon.com/placeholder/users/blepoutre", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <%= link_to "Action", "#", class: "dropdown-item" %>
+              <%= link_to "Another action", "#", class: "dropdown-item" %>
+              <%= link_to "Log out", "#", class: "dropdown-item", data: {turbo_method: :delete} %>
+            </div>
+          </li>
+      </ul>
+    </div>
+  </div>
+</div>
 
-<table class="container table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">title</th>
-      <th scope="col">overview</th>
-      <%#th scope="col">poster_url</th>%>
-      <th scope="col">rating</th>
-      <th scope="col">delete</th>
-    </tr>
-  </thead>
-  <tbody>
+<h1><%= @list.name.upcase %></h1>
+  <div class= container>
+    <div class="card-movie-list">
       <% @list.bookmarks.each_with_index do |bookmark, index|%>
-    <tr>
-      <th scope="row"><%= index + 1 %></th>
-      <td><%= bookmark.movie.title %></td>
-      <td><%= bookmark.movie.overview %></td>
-      <%#<td><%= bookmark.movie.poster_url ></td>%>
-      <td><%= bookmark.movie.rating %></td>
-      <td><%= link_to "❌", bookmark_path(bookmark.id), data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'} %></td>
-    </tr>
+        <h2><%= bookmark.movie.title %></h2>
+        <p><%= bookmark.movie.overview %>
+        <p><%= bookmark.movie.poster_url %>
+        <p><%= bookmark.movie.rating %>
+        <%= link_to "❌", bookmark_path(bookmark.id), data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
       <% end %>
-  </tbody>
-</table>
+    </div>
+  </div>
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Library</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><%= link_to "#", new_list_path %></button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <% @list.bookmarks.each_with_index do |bookmark, index|%>
+          <h2><%= bookmark.movie.title %></h2>
+          <p><%= bookmark.movie.overview %>
+          <p><%= bookmark.movie.poster_url %>
+          <p><%= bookmark.movie.rating %>
+          <%= link_to "❌", bookmark_path(bookmark.id), data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
+          <% end %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="close-movie-link" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button id="add-modal-btn" type="button" class="btn btn-primary">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const addMovieLink = document.getElementById('add-movie-link');
+    const closeModalBtns = document.querySelectorAll('#close-modal-btn, #add-modal-btn');
+    const modalElement = document.getElementById('staticBackdrop');
+    const modalInstance = new bootstrap.Modal(modalElement);
+
+    addMovieLink.addEventListener('click', function(event) {
+      event.preventDefault();
+      modalInstance.show();
+    });
+
+    closeModalBtns.forEach(button => {
+      button.addEventListener('click', function() {
+        modalInstance.hide();
+      });
+    });
+  });
+</script>
