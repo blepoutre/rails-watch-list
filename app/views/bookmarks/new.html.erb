@@ -1,0 +1,8 @@
+<div class="container d-flex justify-content-center">
+  <%= simple_form_for [@list, @bookmark] do |f| %>
+  <%= f.input :comment %>
+  <%= f.association :movie %>
+  <%= f.submit '+ Add new bookmark', class: 'btn btn-success' %>
+  <%= link_to 'Return', list_path(@list), class: 'btn btn-danger' %>
+  <% end %>
+</div>

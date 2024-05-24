@@ -1,0 +1,7 @@
+<div class="container d-flex justify-content-center">
+  <%= simple_form_for @list do |f| %>
+  <%= f.input :name %>
+  <%= f.submit '+ Add new list', class: 'btn btn-success' %>
+  <%= link_to 'Return', lists_path, class: 'btn btn-danger' %>
+  <% end %>
+</div>
